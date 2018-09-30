@@ -3,17 +3,16 @@ import PropTypes from 'prop-types';
 import QrReader from 'react-qr-reader';
 import Modal from '@material-ui/core/Modal';
 import { withStyles } from '@material-ui/core/styles';
-import { searchSurugayaFromQr } from '../actions';
 
 const styles = theme => ({
   root: {
     justifyContent: 'center'
   },
   content: {
-    width: '50vw',
+    width: '80vw',
     height: '80vh',
     backgroundColor: 'white',
-    marginLeft: '25%',
+    marginLeft: '10%',
     textAlign: 'center'
   }
 });
@@ -21,9 +20,10 @@ const styles = theme => ({
 const QrReaderModal = props => {
   /** スキャン時に発火する */
   const handleScan = data => {
-    console.log(data);
     if (data) {
-      searchSurugayaFromQr(data);
+      console.log(data);
+      alert(`以下のURLのカード情報を取得します。\n${data}`);
+      props.searchSurugayaFromQr(data);
     }
   };
   const handleError = err => {
@@ -49,7 +49,8 @@ const QrReaderModal = props => {
 QrReaderModal.propTypes = {
   classes: PropTypes.object.isRequired,
   open: PropTypes.bool,
-  closeModal: PropTypes.function
+  closeModal: PropTypes.func,
+  searchSurugayaFromQr: PropTypes.func
 };
 
 export default withStyles(styles)(QrReaderModal);

@@ -17,6 +17,7 @@ const reducer = (state = initial, action) => {
     return { ...state, status: 'done', error: false, list: action.payload.data };
   }
   case FAILURE_LIST: {
+    alert(action.payload.errorMessage);
     return { ...state, status: 'error', error: true };
   }
   case OPEN_QR_MODAL: {

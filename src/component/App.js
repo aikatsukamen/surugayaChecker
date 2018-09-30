@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 
 import './App.css';
-import { requestList, changeView, updateHaveList, closeQrModal } from '../actions';
+import { requestList, openQrModal, updateHaveList, closeQrModal, searchSurugayaFromQr } from '../actions';
 import GridList from './GridList';
 import Navigation from './Navigation';
 import QrReader from './QrReader';
@@ -27,13 +27,13 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <Navigation selected={this.props.selected} changeView={this.props.changeView} requestList={this.props.requestList} />
+        <Navigation showQrModal={this.props.openQrModal} />
         <div style={{ textAlign: 'left', padding: '5px', fontSize: '8px' }}>
           status:
           {this.props.status}
         </div>
-        <GridList list={this.props.list} have={this.props.have} sort={this.props.selected} updateHaveList={this.props.updateHaveList} />
-        <QrReader open={this.props.showQrModal} closeModal={this.props.closeQrModal} />
+        <GridList list={this.props.list} />
+        <QrReader open={this.props.isOpenQrModal} closeModal={this.props.closeQrModal} searchSurugayaFromQr={this.props.searchSurugayaFromQr} />
       </div>
     );
   }
@@ -44,31 +44,28 @@ function mapStateToProps(state) {
   return {
     status: state.reducer.status,
     list: state.reducer.list,
-    have: state.reducer.have,
-    selected: state.reducer.selected,
-    showQrModal: state.reducer.isShowQrReader
+    isOpenQrModal: state.reducer.isShowQrReader
   };
 }
 
 // action
 const mapDispatchToProps = {
   requestList,
-  changeView,
+  openQrModal,
   updateHaveList,
-  closeQrModal
+  closeQrModal,
+  searchSurugayaFromQr
 };
 
 App.propTypes = {
   classes: PropTypes.object.isRequired,
   status: PropTypes.string.isRequired,
   list: PropTypes.array.isRequired,
-  have: PropTypes.array.isRequired,
-  selected: PropTypes.string.isRequired,
+  isOpenQrModal: PropTypes.bool.isRequired,
   requestList: PropTypes.func.isRequired,
-  changeView: PropTypes.func.isRequired,
-  updateHaveList: PropTypes.func.isRequired,
+  openQrModal: PropTypes.func.isRequired,
   closeQrModal: PropTypes.func.isRequired,
-  showQrModal: PropTypes.bool.isRequired
+  searchSurugayaFromQr: PropTypes.func.isRequired
 };
 
 export default connect(

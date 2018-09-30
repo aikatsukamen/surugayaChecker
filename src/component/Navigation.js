@@ -20,12 +20,19 @@ const SimpleBottomNavigation = props => {
   const { classes } = props;
 
   const handleChange = (event, value) => {
-    props.changeView(value);
+    switch (value) {
+    case 'qr':
+      props.showQrModal();
+      break;
+    default:
+      alert('その機能はまだ無いよ！');
+      break;
+    }
   };
 
   return (
     <div>
-      <BottomNavigation value={props.selected} onChange={handleChange} showLabels className={classes.root}>
+      <BottomNavigation onChange={handleChange} showLabels className={classes.root}>
         <BottomNavigationAction value="qr" label="カメラでQR読取" icon={<PhotoCamera />} />
         <BottomNavigationAction value="history" label="履歴" icon={<History />} />
       </BottomNavigation>
@@ -35,9 +42,7 @@ const SimpleBottomNavigation = props => {
 
 SimpleBottomNavigation.propTypes = {
   classes: PropTypes.object.isRequired,
-  selected: PropTypes.string.isRequired,
-  changeView: PropTypes.func.isRequired,
-  requestList: PropTypes.func.isRequired
+  showQrModal: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(SimpleBottomNavigation);

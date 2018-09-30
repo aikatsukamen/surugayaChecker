@@ -55,10 +55,7 @@ const TitlebarGridList = props => {
 
 TitlebarGridList.propTypes = {
   classes: PropTypes.object.isRequired,
-  list: PropTypes.array.isRequired,
-  have: PropTypes.array.isRequired,
-  sort: PropTypes.string.isRequired,
-  updateHaveList: PropTypes.func.isRequired
+  list: PropTypes.array.isRequired
 };
 
 export default withStyles(styles)(TitlebarGridList);

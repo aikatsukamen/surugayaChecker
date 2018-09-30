@@ -12,7 +12,7 @@ function getSurugaya(keyword) {
         return response.json();
       })
       .then(json => {
-        const ret = scrapeSurugaya(json.htmlStr);
+        const ret = scrapeSurugaya(json.htmlStr, keyword);
         resolve({ data: ret });
       })
       .catch(error => {
@@ -24,10 +24,11 @@ function getSurugaya(keyword) {
 /**
  * 駿河屋の商品データをスクレイピングする
  * @param {string} htmlStr
+ * @param {string} keyword
  * @return {object} スクレイピング結果
  */
-function scrapeSurugaya(htmlStr) {
-  if (htmlStr.match('検索結果は０件です') !== null) throw { message: 'データが見つかりません' };
+function scrapeSurugaya(htmlStr, keyword) {
+  if (htmlStr.match('検索結果は０件です') !== null) throw `駿河屋の検索結果が0件です。(${keyword})`;
 
   const $ = cheerio.load(htmlStr);
   const surugayaResult = [];
@@ -74,6 +75,10 @@ function scrapeSurugaya(htmlStr) {
 }
 
 function getCardInfoFromQr(qrcode) {
+  // TODO:旧カツカードのQRと照合する
+  if (qrcode.indexOf('http://aikatsu.com/qr') > -1) return { error: '旧アイカツカードにはまだ対応してないよ' };
+
+  // スターズ以降のカードは、QRにアクセスして名前を取得
   return new Promise(resolve => {
     fetchJsonp('https://script.google.com/macros/s/AKfycbyGqtJYxOIgvFgYW-xZRW4ZGQAfwPunJGzm6WwiCetbI56CGJWh/exec?url=' + encodeURIComponent(qrcode), {
       jsonpCallback: 'callback',
