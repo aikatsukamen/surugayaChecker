@@ -1,6 +1,8 @@
 import fetchJsonp from 'fetch-jsonp';
 import cheerio from 'cheerio';
 
+import qrNameMap from '../data/cardnameMap.json';
+
 function getSurugaya(keyword) {
   const url = `https://www.suruga-ya.jp/search?category=5&search_word=${keyword}`;
   return new Promise(resolve => {
@@ -75,11 +77,14 @@ function scrapeSurugaya(htmlStr, keyword) {
 }
 
 function getCardInfoFromQr(qrcode) {
-  // TODO:旧カツカードのQRと照合する
-  if (qrcode.indexOf('http://aikatsu.com/qr') > -1) return { error: '旧アイカツカードにはまだ対応してないよ' };
-
-  // スターズ以降のカードは、QRにアクセスして名前を取得
   return new Promise(resolve => {
+    // TODO:旧カツカードのQRと照合する
+    // if (qrcode.indexOf('http://aikatsu.com/qr') > -1) return { error: '旧アイカツカードにはまだ対応してないよ' };
+    if (qrNameMap[qrcode]) {
+      resolve({ data: qrNameMap[qrcode] });
+    }
+
+    // スターズ以降のカードは、QRにアクセスして名前を取得
     fetchJsonp('https://script.google.com/macros/s/AKfycbyGqtJYxOIgvFgYW-xZRW4ZGQAfwPunJGzm6WwiCetbI56CGJWh/exec?url=' + encodeURIComponent(qrcode), {
       jsonpCallback: 'callback',
       timeout: 10000

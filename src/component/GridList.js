@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { List, ListItem, ListItemText } from '@material-ui/core';
+import { List, ListItem, ListItemText, IconButton } from '@material-ui/core';
+import ShopIcon from '@material-ui/icons/Shop';
 
 const styles = theme => ({
   root: {
@@ -39,6 +40,10 @@ const styles = theme => ({
 const TitlebarGridList = props => {
   const { classes } = props;
 
+  const openItem = url => {
+    window.open(url);
+  };
+
   return (
     <div className={classes.root}>
       <List>
@@ -46,6 +51,15 @@ const TitlebarGridList = props => {
           <ListItem key={item.name}>
             <img className={classes.image} alt={item.name} src={item.imageUrl} />
             <ListItemText primary={item.name} secondary={item.price} />
+            <IconButton
+              color="primary"
+              className={classes.button}
+              onClick={() => {
+                openItem(item.itemUrl);
+              }}
+            >
+              <ShopIcon />
+            </IconButton>
           </ListItem>
         ))}
       </List>

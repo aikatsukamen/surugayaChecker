@@ -30,3 +30,13 @@ export const closeQrModal = createAction(CLOSE_QR_MODAL);
 // QR読み込み時の検索処理
 export const SEARCH_SURUGAYA_FROM_QR = 'SEARCH_SURUGAYA_FROM_QR';
 export const searchSurugayaFromQr = createAction(SEARCH_SURUGAYA_FROM_QR);
+
+// 履歴表示
+export const SHOW_HISTORY = 'SHOW_HISTORY';
+export const showHistory = createAction(SHOW_HISTORY);
+
+// 通知欄表示
+export const OPEN_NOTIFY = 'OPEN_NOTIFY';
+export const openNotify = createAction(OPEN_NOTIFY);
+export const CLOSE_NOTIFY = 'CLOSE_NOTIFY';
+export const closeNotify = createAction(CLOSE_NOTIFY);

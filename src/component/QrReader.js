@@ -22,7 +22,6 @@ const QrReaderModal = props => {
   const handleScan = data => {
     if (data) {
       console.log(data);
-      alert(`以下のURLのカード情報を取得します。\n${data}`);
       props.searchSurugayaFromQr(data);
     }
   };

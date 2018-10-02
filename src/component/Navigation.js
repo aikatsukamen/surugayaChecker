@@ -24,6 +24,9 @@ const SimpleBottomNavigation = props => {
     case 'qr':
       props.showQrModal();
       break;
+    case 'history':
+      props.showHistory();
+      break;
     default:
       alert('その機能はまだ無いよ！');
       break;
@@ -42,7 +45,8 @@ const SimpleBottomNavigation = props => {
 
 SimpleBottomNavigation.propTypes = {
   classes: PropTypes.object.isRequired,
-  showQrModal: PropTypes.func.isRequired
+  showQrModal: PropTypes.func.isRequired,
+  showHistory: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(SimpleBottomNavigation);
